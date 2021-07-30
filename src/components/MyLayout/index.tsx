@@ -1,15 +1,16 @@
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import SiderMenu from "./components/SiderMenu";
 import TopLogo from "./components/TopLogo";
 import SubMenu from "./components/SubMenu";
 
 export default defineComponent({
   setup() {
+    const selectedKeys1 = ref();
     return () => (
       <a-layout class="my-layout">
         <a-layout-sider class="my-layout-sider" width="120">
           <TopLogo />
-          <SiderMenu />
+          <SiderMenu v-model={[selectedKeys1.value, "selectedKeys"]} />
         </a-layout-sider>
         <a-layout>
           <a-layout-header class="my-layout-header">

@@ -1,31 +1,43 @@
-import { defineComponent } from "vue";
+import { useVModel } from "@vueuse/core";
+import { computed, defineComponent, ref } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
-  setup() {
+  props: {
+    selectedKeys: [Array],
+  },
+  setup(props, { emit }) {
+    const store = useStore();
+
+    const menus = computed(() => {
+      return store.state.auth.permissions;
+    });
+
+    const selectedKeys = ref([]);
+
+    const onSelect = () => {
+      console.log(selectedKeys.value);
+    };
+
     return () => (
       <a-menu
         mode="inline"
         theme="dark"
-        // :inline-collapsed="collapsed"
-        // v-model:openKeys="openKeys"
-        // v-model:selectedKeys="selectedKeys"
+        v-model={[selectedKeys.value, "selectedKeys"]}
+        onSelect={onSelect}
       >
-        <a-menu-item
-          key="1"
-          v-slots={{
-            icon: () => <my-icon style="" type="home" />,
-          }}
-        >
-          <span>首页</span>
-        </a-menu-item>
-        <a-menu-item
-          key="2"
-          v-slots={{
-            icon: () => <my-icon type="user" />,
-          }}
-        >
-          <span>客户</span>
-        </a-menu-item>
+        {menus.value.children?.map((item: any) => (
+          <a-menu-item
+            key={item.id}
+            v-slots={{
+              icon: () => <my-icon type={item.icon} />,
+            }}
+          >
+            <span>
+              {item.id}_{item.name}
+            </span>
+          </a-menu-item>
+        ))}
       </a-menu>
     );
   },

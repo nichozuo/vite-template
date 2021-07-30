@@ -81,7 +81,8 @@ instance.interceptors.response.use(
     } else if (code === 10000) {
       handleCode(response.data);
       if (location.pathname != "/login") {
-        router.push("/login");
+        // router.push("/login");
+        location.href = "/login";
       }
       return Promise.reject(response.data);
     } else {

@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-// import auth from "./modules/auth";
+import auth from "./modules/auth";
 import loading from "./modules/loading";
 import layout from "./modules/layout";
 
@@ -11,7 +11,7 @@ export interface StateType {
 
 export default createStore({
   modules: {
-    // auth,
+    auth,
     loading,
     layout,
   },
